@@ -1,19 +1,104 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>
-      
-    </title>
-    <link rel="stylesheet" href="Styles.css">
-  </head>
-  <body>
-    <div id="page">
-      <p id="title">Archived Files</p>
-      <ul id="folder">
-        <div class="file" onclick="dlConfirmation()">File</div><a id="dl1" href="Functions.js" download></a>
-      </ul>
+<head>
+  <title>Yes or no by Reks</title>
+  <style>
+    body {
+      background-color: #171717;
+      color: white;
+      margin: 0;
+    }
+    #credit {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+      margin-top: 5px;
+      text-align: center;
+    }
+    #group {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    #title {
+      font-size: 3vh;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    #searchGroup {
+      position: fixed;
+      top: 90%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      align-items: center;
+    }
+    #searchbox {
+      border: none;
+      border-radius: 20px;
+      padding: 4px;
+    }
+    #button {
+      margin-top: 10px;
+      align-items: center;
+      margin-left: 60px;
+    }
+    .button {
+      margin-top: 10px;
+      align-items: center;
+      margin-left: 9px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="credit">Made by Reks</div>
+  <div id="group">
+    <p id="title"><b>Ask a yes or no question</b></p>
+    <div id="searchGroup">
+      <input type="text" oninput="typing()" id="searchbox" placeholder="Type it here..">
+     <button id="button" onclick="searchResult()" disabled>Submit</button>
     </div>
+  </div>
+  
+  <script>
+    var input = document.getElementById("searchbox");
+    var button = document.getElementById("button");
+    var text = document.getElementById("title");
     
-    <script src="Functions.js"></script>
-  </body>
-</html>
+    function typing(){
+      var words = document.getElementById("searchbox").value;
+      if(words.trim() !== ""){
+        button.disabled = false;
+      }else{
+        button.disabled = true;
+      }
+    }
+    
+    function searchResult(){
+      var options = ["Yes", "No"];
+      var random = Math.floor(Math.random() * options.length);
+      var answer = options[random];
+      text.innerHTML = "answering.."
+      button.style.display = "none";
+      input.style.display = "none";
+      text.style.fontSize = "2vh";
+      setTimeout(() => {
+        var newbutton = document.createElement("button");
+        var group = document.getElementById("searchGroup")
+        text.innerHTML = answer;
+        text.style.fontSize = "3vh";
+        newbutton.innerHTML = "Ask again";
+        newbutton.classList.add("button");
+        newbutton.addEventListener("click", function() {
+          newbutton.style.display = "none";
+          button.style.display = "block";
+          input.style.display = "block";
+          text.style.fontSize = "3vh";
+          text.innerHTML = "Ask a yes or no question"
+          input.value = "";
+        });
+        group.appendChild(newbutton);
+      }, 2000)
+    }
+  </script>
+</body>
